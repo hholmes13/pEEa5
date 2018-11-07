@@ -8,6 +8,6 @@
  *
  * @author hholmes
  */
-public class Controller {
+public class Controller implements Clockable{
     
 }
