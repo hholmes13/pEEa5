@@ -1,13 +1,27 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * File: Clockable.java
+ * Author: Hunter Holmes hholmes1@uab.edu
+ * Assignment:  P5
+ * Vers: 1.0.0 11/07/2018 hah - initial coding
  */
 
 /**
  *
- * @author hholmes
+ * @author Hunter Holmes hholmes1@uab.edu
  */
 public interface Clockable {
-    
+
+    /**
+     * Take actions based on notifications that the clock is about to happen.
+     * The controller's latest actions were issued on second ago. Generally used
+     * to compute dynamics before letting new control decisions occur
+     * @throws MissingComponentException
+     */
+    public void preClock() throws MissingComponentException;
+
+    /**
+     * Take actions for new second Generally used to allow the controller to
+     * make new decisions
+     */
+    public void clock();
 }

@@ -1,13 +1,33 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * File: Controller.java
+ * Author: Hunter Holmes hholmes1@uab.edu
+ * Assignment:  P5
+ * Vers: 1.0.0 11/07/2018 hah - initial coding
  */
 
 /**
  *
- * @author hholmes
+ * @author Hunter Holmes hholmes1@uab.edu
  */
-public class Controller implements Clockable{
-    
+public class Controller implements Clockable {
+
+    public Controller() {
+
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void clock() {
+
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void preClock() {
+
+    }
 }
