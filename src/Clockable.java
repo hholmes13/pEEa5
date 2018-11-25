@@ -6,7 +6,7 @@
  */
 
 /**
- *
+ * Interface used to promise behavior of objects that need to be clocked
  * @author Hunter Holmes hholmes1@uab.edu
  */
 public interface Clockable {

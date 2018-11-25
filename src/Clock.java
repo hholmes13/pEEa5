@@ -8,7 +8,7 @@
 import java.util.ArrayList;
 
 /**
- *
+ * Pushes pre-clock and clock for all clockable objects in system
  * @author Hunter Holmes hholmes1@uab.edu
  */
 public class Clock {
