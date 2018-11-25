@@ -3,14 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/Module.java</file>
-            <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/Logger.java</file>
-            <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/Controller.java</file>
+            <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/Pattern.java</file>
             <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/TestP5.java</file>
             <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/Clockable.java</file>
-            <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/PrintLogger.java</file>
-            <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/NullLogger.java</file>
             <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/Light.java</file>
+            <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/Module.java</file>
+            <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/Logger.java</file>
+            <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/Mode.java</file>
+            <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/Controller.java</file>
+            <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/PrintLogger.java</file>
+            <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/MissingComponentException.java</file>
+            <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/NullLogger.java</file>
             <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/Clock.java</file>
             <file>file:/C:/Users/hholmes/Documents/GitHub/hholmes1-P5/src/StringLogger.java</file>
         </group>
