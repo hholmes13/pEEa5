@@ -11,4 +11,10 @@
  */
 public class Light {
     
+    boolean state;
+    
+    public Light(){
+        state = false;
+    }
+    
 }

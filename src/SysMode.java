@@ -11,4 +11,24 @@
  */
 public class SysMode {
     
+    
+    /**
+     * 
+     */
+    public SysMode(String sysModeName){
+        switch (sysModeName){
+                case "ALL ON":
+                    break;
+                    
+                case "ALL OFF":
+                    break;
+                    
+                default:
+                    break;
+                
+        }
+                
+    }
+    
+    
 }

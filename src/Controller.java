@@ -20,23 +20,30 @@ public class Controller implements Clockable {
     private boolean presentSystemState;
 
     private Logger logger;
+
+    private Module[] firstModules; //so controller can communicate with its direct modules
+
+    private Module[][] allModulesConnected; //so controller knows whats connected
     
-    private ArrayList<Module> firstModules; 
+    public int maxConnections;
+    public int maxModuleChainLength;
 
     /**
      * Create a controller
      * @param logger
      */
     public Controller(Logger logger) {
+        this.maxConnections = 4;
+        this.maxModuleChainLength = 4;
         this.logger = (logger != null) ? logger : new NullLogger();
         presentSystemState = false;
+        firstModules = new Module[maxConnections];
+        allModulesConnected = new Module[maxModuleChainLength][maxModuleChainLength];
     }
 
     /**
      * Provide the string “Controller with TS:{UID} = {temperature} and
-     * Heater:{UID} = {state}” example:
-     * <code>Contoller with TS:10000 = 75.0 and Heater:20000 = ON</code> Use "no
-     * xyz" if there is no corresponding object
+     * Module:{UID} = {state}” example:
      * @return formatted string
      */
     @Override
@@ -46,17 +53,33 @@ public class Controller implements Clockable {
 
         return "Controller with " + moduleString;
     }
-    
+
     /**
-     * Connect a module to the controller. This will connect the first
-     * module in a series of modules. Sub modules are connected to these first 
-     * modules
-     *  
-     * @param module 
+     * Connect a module to the controller. This will connect the first module in
+     * a series of modules. Sub modules are connected to these first modules
+     *
+     * @param module
      */
-    public void connect(Module module){
+    public void connect(Module module, int colPos, int rowPos) {
         this.module = module;
         logger.log(Logger.INFO, "Connect Module " + module);
+        
+        firstModules[colPos] = module;
+        allModulesConnected[colPos][rowPos] = module;
+        
+        module.rowPos = rowPos;
+    }
+
+    /**
+     *
+     * @param module
+     */
+    public void disconnect(Module module, int colPos, int rowPos) {
+        this.module = module;
+        logger.log(Logger.INFO, "Disconnect Module " + module);
+        
+        firstModules[colPos] = null;
+        allModulesConnected[colPos][rowPos] = null;
     }
 
     /**
@@ -64,14 +87,23 @@ public class Controller implements Clockable {
      */
     @Override
     public void clock() {
-
+        // Clock
+        for (Clockable object : firstModules) {
+            logger.log(Logger.INFO, "Clocking " + object);
+            object.clock();
+        }
     }
 
     /**
      *
      */
     @Override
-    public void preClock() {
+    public void preClock() throws MissingComponentException {
+
+        for (Clockable object : firstModules) {
+            logger.log(Logger.INFO, "Preclocking " + object);
+            object.preClock();
+        }
 
     }
 }
