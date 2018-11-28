@@ -14,7 +14,6 @@ public class Module implements Clockable {
 
     private Module subModule;
     private ArrayList<Light> lights;
-
     public int mUID;
     public String type;
     public int typeInt;
@@ -22,11 +21,9 @@ public class Module implements Clockable {
     public int colDim;
     public int rowPos;
     public int colPos;
-
     public boolean state;
     public String status;
     public ModMode modMode;
-
     public Logger logger;
 
     /**

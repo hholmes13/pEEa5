@@ -16,15 +16,10 @@ import java.util.ArrayList;
 public class Controller implements Clockable {
 
     private Module module;
-
     private boolean presentSystemState;
-
     private Logger logger;
-
     private Module[] firstModules; //so controller can communicate with its direct modules
-
     private Module[][] allConnectedModules; //so controller knows whats connected
-
     public int maxConnections;
     public int maxModuleChainLength;
 
