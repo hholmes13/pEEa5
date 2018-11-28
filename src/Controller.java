@@ -23,8 +23,8 @@ public class Controller implements Clockable {
 
     private Module[] firstModules; //so controller can communicate with its direct modules
 
-    private Module[][] allModulesConnected; //so controller knows whats connected
-    
+    private Module[][] allConnectedModules; //so controller knows whats connected
+
     public int maxConnections;
     public int maxModuleChainLength;
 
@@ -38,7 +38,7 @@ public class Controller implements Clockable {
         this.logger = (logger != null) ? logger : new NullLogger();
         presentSystemState = false;
         firstModules = new Module[maxConnections];
-        allModulesConnected = new Module[maxModuleChainLength][maxModuleChainLength];
+        allConnectedModules = new Module[maxModuleChainLength][maxModuleChainLength];
     }
 
     /**
@@ -61,13 +61,17 @@ public class Controller implements Clockable {
      * @param module
      */
     public void connect(Module module, int colPos, int rowPos) {
+        
+        
         this.module = module;
         logger.log(Logger.INFO, "Connect Module " + module);
-        
+
         firstModules[colPos] = module;
-        allModulesConnected[colPos][rowPos] = module;
-        
+        allConnectedModules[colPos][rowPos] = module;
+
         module.rowPos = rowPos;
+        module.colPos = colPos;
+        module.mUID = module.typeInt + (module.colPos * 1000) + (module.rowPos * 100);
     }
 
     /**
@@ -77,21 +81,9 @@ public class Controller implements Clockable {
     public void disconnect(Module module, int colPos, int rowPos) {
         this.module = module;
         logger.log(Logger.INFO, "Disconnect Module " + module);
-        
-        firstModules[colPos] = null;
-        allModulesConnected[colPos][rowPos] = null;
-    }
 
-    /**
-     *
-     */
-    @Override
-    public void clock() {
-        // Clock
-        for (Clockable object : firstModules) {
-            logger.log(Logger.INFO, "Clocking " + object);
-            object.clock();
-        }
+        firstModules[colPos] = null;
+        allConnectedModules[colPos][rowPos] = null;
     }
 
     /**
@@ -106,4 +98,17 @@ public class Controller implements Clockable {
         }
 
     }
+
+    /**
+     *
+     */
+    @Override
+    public void clock() {
+        // Clock
+        for (Clockable object : firstModules) {
+            logger.log(Logger.INFO, "Clocking " + object);
+            object.clock();
+        }
+    }
+
 }

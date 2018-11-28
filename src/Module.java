@@ -15,7 +15,7 @@ public class Module implements Clockable {
     private Module subModule;
     private ArrayList<Light> lights;
 
-    public long mUID;
+    public int mUID;
     public String type;
     public int typeInt;
     public int rowDim;
@@ -52,8 +52,6 @@ public class Module implements Clockable {
 
         this.rowDim = rowDim;
         this.colDim = colDim;
-        this.colPos = 0;
-        this.rowPos = 0;
     }
 
     /**
@@ -67,7 +65,7 @@ public class Module implements Clockable {
         this.status = "OFF";
         this.logger = logger;
         this.type = type;
-        
+
         if (this.type == "GRID") {
             this.typeInt = 10000;
         } else if (this.type == "STRING") {
@@ -75,10 +73,8 @@ public class Module implements Clockable {
         } else {
             //Nothing Yet
         }
-        
+
         this.rowDim = rowDim;
-        this.colPos = 0;
-        this.rowPos = 0;
     }
 
     /**
@@ -93,7 +89,7 @@ public class Module implements Clockable {
      *
      */
     @Override
-    public void clock() {
+    public void preClock() {
 
     }
 
@@ -101,7 +97,7 @@ public class Module implements Clockable {
      *
      */
     @Override
-    public void preClock() {
+    public void clock() {
 
     }
 
