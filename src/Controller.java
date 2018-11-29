@@ -38,8 +38,7 @@ public class Controller {
     }
 
     /**
-     * Provide the string “Controller with TS:{UID} = {temperature} and
-     * Module:{UID} = {state}” example:
+     * 
      * @return formatted string
      */
     @Override
@@ -53,20 +52,24 @@ public class Controller {
     /**
      * Connect a module to the controller. This will connect the first module in
      * a series of modules. Sub modules are connected to these first modules
-     *
+     * 
      * @param module
+     * @param rowPos
+     * @param colPos 
      */
     public void connect(Module module, int rowPos, int colPos) {
 
         this.module = module;
-        logger.log(Logger.INFO, "Connect Module " + module);
+        
 
         firstModules[colPos] = module;
         allConnectedModules[rowPos][colPos] = module;
 
         module.rowPos = rowPos;
         module.colPos = colPos;
-        module.mUID = module.typeInt + (module.rowPos * 1000) + (module.colPos * 100);
+        module.mUID = this.module.typeInt + ((this.module.rowPos + 1 ) * 1000) + ((this.module.colPos + 1) * 100);
+        
+        logger.log(Logger.INFO, "Connect Module " + module.toString() + "to Controller");
     }
 
     /**
@@ -75,10 +78,11 @@ public class Controller {
      */
     public void disconnect(Module module, int rowPos, int colPos) {
         this.module = module;
-        logger.log(Logger.INFO, "Disconnect Module " + module);
 
         firstModules[colPos] = null;
         allConnectedModules[rowPos][colPos] = null;
+        
+        logger.log(Logger.INFO, "Disconnect Module " + module.toString() + "from Controller");
     }
 
     /**
@@ -87,6 +91,42 @@ public class Controller {
      */
     public void preClock(String mode) {
         this.mode = mode;
+        int intMessage;
+        String strBinMessage;
+
+        switch (mode) {
+            case "ALL OFF":
+                intMessage = 100001;
+                strBinMessage = Integer.toBinaryString(intMessage);
+
+                for (int i = 0; i < this.firstModules.length - 1; i++) {
+                    if (this.firstModules[i] != null) {
+                        this.firstModules[i].readMessage(strBinMessage);
+                    } else {
+                        break;
+                    }
+                }
+
+                break;
+            case "ALL ON":
+                intMessage = 100002;
+                strBinMessage = Integer.toBinaryString(intMessage);
+
+                for (int i = 0; i < this.firstModules.length - 1; i++) {
+                    if (this.firstModules[i] != null) {
+                        this.firstModules[i].readMessage(strBinMessage);
+                    } else {
+                        break;
+                    }
+                }
+                break;
+            case "CHECKERBOARD":
+                //nope
+                break;
+            default:
+                //
+                break;
+        }
 
     }
 
@@ -95,8 +135,12 @@ public class Controller {
      */
     public void clock() {
         for (int i = 0; i < firstModules.length - 1; i++) {
+            if (firstModules[i] != null) {
+                firstModules[i].readMessage("100000");
+            } else {
 
-            firstModules[i].readMessage("00000");
+            }
+
         }
 
     }

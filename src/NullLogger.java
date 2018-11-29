@@ -10,11 +10,11 @@
  * @author hholmes
  */
 public class NullLogger extends Logger {
-    
+
     /**
      * Ignore request to log
-     * @param level     unused
-     * @param logEntry  unused
+     * @param level unused
+     * @param logEntry unused
      */
     @Override
     public void log(int level, String logEntry) {

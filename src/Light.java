@@ -6,15 +6,18 @@
  */
 
 /**
- * 
+ *
  * @author Hunter Holmes hholmes1@uab.edu
  */
 public class Light {
-    
+
     boolean state;
-    
-    public Light(){
+
+    /**
+     * Constructor
+     */
+    public Light() {
         state = false;
     }
-    
+
 }

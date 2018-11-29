@@ -35,14 +35,19 @@ public class Clock {
         setMeta(logger);
     }
 
-    // Info that all constructors use
+    /**
+     * Info that all constructors use
+     * @param aLogger 
+     */
     private void setMeta(Logger aLogger) {
         logger = aLogger;
     }
 
-    /**
-     * preClock then clock all items
-     */
+   /**
+    * preClock then clock all items
+    * @param controller
+    * @param mode 
+    */
     public void run(Controller controller, String mode) {
         this.controller = controller;
         this.mode = mode;
@@ -61,8 +66,10 @@ public class Clock {
 
     /**
      * Run n times
-     * @param n number of times to preClock then clock
-     * @throws MissingComponentException
+     * 
+     * @param n
+     * @param controller
+     * @param mode 
      */
     public void run(int n, Controller controller,String mode) {
         for (int i = 0; i < n; i++) {
