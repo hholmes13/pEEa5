@@ -10,10 +10,11 @@ import java.util.ArrayList;
  *
  * @author Hunter Holmes hholmes1@uab.edu
  */
-public class Module implements Clockable {
+public class Module {
 
     private Module subModule;
-    private ArrayList<Light> lights;
+    private Light[][] lights;
+
     public int mUID;
     public String type;
     public int typeInt;
@@ -23,8 +24,10 @@ public class Module implements Clockable {
     public int colPos;
     public boolean state;
     public String status;
-    public ModMode modMode;
     public Logger logger;
+
+    private int nextMode;
+    private int currentMode;
 
     /**
      *
@@ -49,6 +52,10 @@ public class Module implements Clockable {
 
         this.rowDim = rowDim;
         this.colDim = colDim;
+
+        lights = new Light[this.rowDim][this.colDim];
+
+        this.mUID = 0;
     }
 
     /**
@@ -72,6 +79,7 @@ public class Module implements Clockable {
         }
 
         this.rowDim = rowDim;
+        this.colDim = 1;
     }
 
     /**
@@ -82,20 +90,48 @@ public class Module implements Clockable {
         this.subModule = subModule;
     }
 
-    /**
-     *
-     */
-    @Override
-    public void preClock() {
+    public void readMessage(String strBinMessage) {
+        if (strBinMessage == "00000") {
+            this.currentMode = this.nextMode; //this is the take-action or clock message 
+            
+            if(this.subModule != null){
+                this.subModule.readMessage(strBinMessage);
+            }else{
+            //do nothing
+            }
+            
+            return;
+        } else {
 
-    }
+            int intDecMessage;
+            String strDecMessage;
+            char[] decMessageArray;
+            String strmUID;
+            char[] mUIDArray;
 
-    /**
-     *
-     */
-    @Override
-    public void clock() {
+            intDecMessage = Integer.parseInt(strBinMessage, 2);
+            strDecMessage = Integer.toString(intDecMessage);
+            decMessageArray = strDecMessage.toCharArray();
 
+            strmUID = Integer.toString(this.mUID);
+            mUIDArray = strmUID.toCharArray();
+
+            if (decMessageArray[0] == mUIDArray[0] && decMessageArray[1] == mUIDArray[1] && decMessageArray[2] == mUIDArray[2]) {
+                this.nextMode = (Character.getNumericValue(decMessageArray[3])) * 10 + (Character.getNumericValue(decMessageArray[4]));
+            } else if (decMessageArray[0] == mUIDArray[0] && decMessageArray[1] == '0' && decMessageArray[2] == '0') {
+                this.nextMode = (Character.getNumericValue(decMessageArray[3])) * 10 + (Character.getNumericValue(decMessageArray[4]));
+                this.subModule.readMessage(strBinMessage);
+            } else if (decMessageArray[0] == '0' && decMessageArray[1] == mUIDArray[1] && decMessageArray[2] == '0') {
+                this.nextMode = (Character.getNumericValue(decMessageArray[3])) * 10 + (Character.getNumericValue(decMessageArray[4]));
+                this.subModule.readMessage(strBinMessage);
+            } else if (decMessageArray[0] == '0' && decMessageArray[1] == '0' && decMessageArray[2] == mUIDArray[2]) {
+                this.nextMode = (Character.getNumericValue(decMessageArray[3])) * 10 + (Character.getNumericValue(decMessageArray[4]));
+                this.subModule.readMessage(strBinMessage);
+            } else if (decMessageArray[0] == '0' && decMessageArray[1] == '0' && decMessageArray[2] == '0') {
+                this.nextMode = (Character.getNumericValue(decMessageArray[3])) * 10 + (Character.getNumericValue(decMessageArray[4]));
+                this.subModule.readMessage(strBinMessage);
+            }
+        }
     }
 
     /**

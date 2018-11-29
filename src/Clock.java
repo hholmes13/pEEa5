@@ -13,9 +13,10 @@ import java.util.ArrayList;
  */
 public class Clock {
 
-    private ArrayList<Clockable> clockableObjects;
     private long clockCount = 0;
     private Logger logger;
+    public Controller controller;
+    public String mode;
 
     /**
      * Create a clock with a null logger
@@ -36,39 +37,26 @@ public class Clock {
 
     // Info that all constructors use
     private void setMeta(Logger aLogger) {
-        clockableObjects = new ArrayList<>();
         logger = aLogger;
     }
 
     /**
-     * Add a clockable object to the list of items to be clocked
-     * @param item clockable object
-     */
-    public void add(Clockable item) {
-        if (item != null) {
-            clockableObjects.add(item);
-        }
-    }
-
-    /**
      * preClock then clock all items
-     * @throws MissingComponentException
      */
-    public void run() throws MissingComponentException {
-
+    public void run(Controller controller, String mode) {
+        this.controller = controller;
+        this.mode = mode;
         clockCount++;
         logger.log(Logger.TIMESTAMP, "--- Clocking to " + clockCount + " seconds.");
         // preClock
-        for (Clockable object : clockableObjects) {
-            logger.log(Logger.INFO, "Preclocking " + object);
-            object.preClock();
-        }
+       
+            logger.log(Logger.INFO, "Preclocking System");
+            this.controller.preClock(this.mode);
 
         // Clock
-        for (Clockable object : clockableObjects) {
-            logger.log(Logger.INFO, "Clocking " + object);
-            object.clock();
-        }
+        
+            logger.log(Logger.INFO, "Clocking System");
+            controller.clock();
     }
 
     /**
@@ -76,9 +64,9 @@ public class Clock {
      * @param n number of times to preClock then clock
      * @throws MissingComponentException
      */
-    public void run(int n) throws MissingComponentException {
+    public void run(int n, Controller controller,String mode) {
         for (int i = 0; i < n; i++) {
-            run();
+            run(controller, mode );
         }
     }
 

@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * reduce lag on command distribution
  * @author Hunter Holmes hholmes1@uab.edu
  */
-public class Controller implements Clockable {
+public class Controller {
 
     private Module module;
     private boolean presentSystemState;
@@ -22,6 +22,7 @@ public class Controller implements Clockable {
     private Module[][] allConnectedModules; //so controller knows whats connected
     public int maxConnections;
     public int maxModuleChainLength;
+    public String mode;
 
     /**
      * Create a controller
@@ -55,55 +56,48 @@ public class Controller implements Clockable {
      *
      * @param module
      */
-    public void connect(Module module, int colPos, int rowPos) {
-        
-        
+    public void connect(Module module, int rowPos, int colPos) {
+
         this.module = module;
         logger.log(Logger.INFO, "Connect Module " + module);
 
         firstModules[colPos] = module;
-        allConnectedModules[colPos][rowPos] = module;
+        allConnectedModules[rowPos][colPos] = module;
 
         module.rowPos = rowPos;
         module.colPos = colPos;
-        module.mUID = module.typeInt + (module.colPos * 1000) + (module.rowPos * 100);
+        module.mUID = module.typeInt + (module.rowPos * 1000) + (module.colPos * 100);
     }
 
     /**
      *
      * @param module
      */
-    public void disconnect(Module module, int colPos, int rowPos) {
+    public void disconnect(Module module, int rowPos, int colPos) {
         this.module = module;
         logger.log(Logger.INFO, "Disconnect Module " + module);
 
         firstModules[colPos] = null;
-        allConnectedModules[colPos][rowPos] = null;
+        allConnectedModules[rowPos][colPos] = null;
+    }
+
+    /**
+     *
+     * @param mode
+     */
+    public void preClock(String mode) {
+        this.mode = mode;
+
     }
 
     /**
      *
      */
-    @Override
-    public void preClock() throws MissingComponentException {
-
-        for (Clockable object : firstModules) {
-            logger.log(Logger.INFO, "Preclocking " + object);
-            object.preClock();
-        }
-
-    }
-
-    /**
-     *
-     */
-    @Override
     public void clock() {
-        // Clock
-        for (Clockable object : firstModules) {
-            logger.log(Logger.INFO, "Clocking " + object);
-            object.clock();
-        }
-    }
+        for (int i = 0; i < firstModules.length - 1; i++) {
 
+            firstModules[i].readMessage("00000");
+        }
+
+    }
 }
